@@ -22,7 +22,10 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.appService.login(this.user, this.password).subscribe(data => {
-      this.router.navigate(['home']);
+      if(data != null){
+        sessionStorage.setItem('user',JSON.stringify(data))
+        this.router.navigate(['home']);
+      }
     });
   }
 

@@ -9,6 +9,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AppService } from './app.service';
+import { CanActivateViaAuthGuard } from './pages/guards/CanActivateViaAuthGuard';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AppService } from './app.service';
     LoginComponent
   ],
   providers: [
-    AppService
+    AppService,
+    CanActivateViaAuthGuard
   ],
   bootstrap: [AppComponent]
 })

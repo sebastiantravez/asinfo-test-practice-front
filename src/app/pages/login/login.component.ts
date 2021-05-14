@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,13 @@ export class LoginComponent implements OnInit {
       if(data != null){
         sessionStorage.setItem('user',JSON.stringify(data))
         this.router.navigate(['home']);
+        return;
       }
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Credenciales incorrectas',
+      })
     });
   }
 

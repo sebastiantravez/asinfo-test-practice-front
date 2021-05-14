@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  tittle: string = "";
+
   constructor(public router: Router) { }
 
   ngOnInit(): void {

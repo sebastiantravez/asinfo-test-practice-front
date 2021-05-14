@@ -21,6 +21,14 @@ export class AppService {
     return this.http.post(ambiente.urlServicioRest + 'login', usersPresenters);
   }
 
+  public getDepartments(){
+    return this.http.get<any>(ambiente.urlServicioRest + 'getDepartments');
+  }
+
+  public getCharges(){
+    return this.http.get<any>(ambiente.urlServicioRest + 'getCharges');
+  }
+
 
   public isLogged() {
     if (sessionStorage.getItem('user') != null) {

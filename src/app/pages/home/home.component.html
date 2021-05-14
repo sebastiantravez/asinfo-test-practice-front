@@ -13,12 +13,12 @@
                 </div>
                 <form [formGroup]="registerForm">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Nombres Completos</label>
-                        <input formControlName="fullName" type="email" class="form-control" id="exampleInputEmail1"
-                            aria-describedby="emailHelp">
+                        <label class="p-label" for="exampleInputEmail1">Nombres Completos</label>
+                        <input formControlName="fullName" type="text" class="form-control" id="exampleInputEmail1">
                     </div>
+                    <br>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Tipo identificacion</label>
+                        <label class="p-label" for="exampleInputEmail1">Tipo identificación</label>
                         <br>
                         <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
                             formControlName="identificationType">
@@ -28,24 +28,39 @@
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
+                    <br>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Numero de identificacion</label>
-                        <input formControlName="identificationNumber" type="email" class="form-control"
-                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <label class="p-label" for="exampleInputEmail1">Numero de identificación</label>
+                        <input formControlName="identificationNumber" type="text" class="form-control"
+                            id="exampleInputEmail1">
                     </div>
+                    <br>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Sueldo</label>
+                        <label class="p-label" for="exampleInputEmail1">Correo Electronico</label>
+                        <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                        <small style="color: red;" *ngIf="email.invalid && (email.dirty || email.touched)">
+                            <mat-error *ngIf="email.errors.required">Email is required
+                            </mat-error>
+                            <mat-error *ngIf="email.errors.pattern">
+                                Invalid email
+                            </mat-error>
+                        </small>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label class="p-label" for="exampleInputEmail1">Sueldo</label>
                         <input formControlName="salary" type="number" class="form-control" id="exampleInputEmail1"
                             aria-describedby="emailHelp">
                     </div>
                     <br>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Fecha ingreso</label>
+                        <label class="p-label" for="exampleInputEmail1">Fecha ingreso</label>
                         <br>
                         <input class="form-control" type="date" formControlName="date">
                     </div>
                     <br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" (click)="registerEmployee()" class="btn btn-primary">Siguiente</button>
                 </form>
             </div>
         </div>

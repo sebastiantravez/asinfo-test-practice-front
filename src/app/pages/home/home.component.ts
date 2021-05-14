@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
+import { AppService } from 'src/app/app.service';
 import { UsersPresenter } from 'src/app/models';
+import Swal from 'sweetalert2';
 import { EnumMessages, EnumUsersRoles } from '../enums/messages';
 import { IdentificationType } from '../interface/identification-type';
 
@@ -25,13 +27,11 @@ export class HomeComponent implements OnInit {
   ];
   registerForm: FormGroup;
   emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  date: any;
-  radioItems: Array<string>;
-  model = { option: 'option3' };
-  favoriteSeason: string;
-  seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
+  departments: any;
+  charges: any;
 
-  constructor(public router: Router, public formBuilder: FormBuilder) { }
+
+  constructor(public router: Router, public formBuilder: FormBuilder, public appService: AppService) { }
 
   ngOnInit(): void {
     this.users = JSON.parse(sessionStorage.getItem('user'));
@@ -40,31 +40,49 @@ export class HomeComponent implements OnInit {
     } else if (this.users.usersRolesPresenters.filter(x => x.name = EnumUsersRoles.SUPER_USER)) {
       this.tittle = EnumMessages.TITTLESUPERVIOR;
     }
-
-    this.radioItems = ['DNI', 'RUC', 'PASSPORT'];
+    this.getDepartments();
+    this.getCharges();
     this.registerForm = this.formBuilder.group({
       'fullName': ['', Validators.compose([Validators.required])],
       'identificationType': ['', Validators.compose([Validators.required])],
-      //'email': ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
+      'email': ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
       'identificationNumber': ['', Validators.compose([Validators.required])],
       'salary': ['', Validators.compose([Validators.required])],
       'date': ['', Validators.compose([Validators.required])]
     });
   }
 
+  getDepartments() {
+    this.appService.getDepartments().subscribe(data => {
+      this.departments = data;
+    });
+  }
+
+  getCharges() {
+    this.appService.getCharges().subscribe(data => {
+      this.charges = data;
+    });
+  }
+
+  get email() { return this.registerForm.get('email') }
+
   closeSession() {
     sessionStorage.clear();
     this.router.navigate(['/']);
   }
 
-  updateDate(event) {
-    var datePipe = new DatePipe("en-US");
-    this.date = datePipe.transform(event.value, 'MMM-dd-yyyy');
+  registerEmployee() {
+    if (this.registerForm.valid) {
+
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Formulario de registro invalido, verifique los campos',
+      })
+    }
   }
 
-  openCalendar(picker: MatDatepicker<Date>) {
-    picker.open();
-  }
 
 
 }

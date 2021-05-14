@@ -1,13 +1,11 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDatepicker } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
-import { UsersPresenter } from 'src/app/models';
 import Swal from 'sweetalert2';
 import { EnumMessages, EnumUsersRoles } from '../enums/messages';
 import { IdentificationType } from '../interface/identification-type';
+import { View } from '../interface/view';
 
 
 
@@ -16,7 +14,7 @@ import { IdentificationType } from '../interface/identification-type';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, View {
 
   tittle: string = "";
   users: any;
@@ -29,7 +27,6 @@ export class HomeComponent implements OnInit {
   emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   departments: any;
   charges: any;
-
 
   constructor(public router: Router, public formBuilder: FormBuilder, public appService: AppService) { }
 
@@ -45,6 +42,8 @@ export class HomeComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       'fullName': ['', Validators.compose([Validators.required])],
       'identificationType': ['', Validators.compose([Validators.required])],
+      'department': ['', Validators.compose([Validators.required])],
+      'charge': ['', Validators.compose([Validators.required])],
       'email': ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
       'identificationNumber': ['', Validators.compose([Validators.required])],
       'salary': ['', Validators.compose([Validators.required])],

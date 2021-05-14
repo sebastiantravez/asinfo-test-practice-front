@@ -55,6 +55,30 @@
                     </div>
                     <br>
                     <div class="form-group">
+                        <label class="p-label" for="exampleInputEmail1">Departamento</label>
+                        <br>
+                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                            formControlName="idDepartment">
+                            <mat-radio-button class="example-radio-button" *ngFor="let item of departments"
+                                [value]="item.department">
+                                {{item.nameDepartment}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label class="p-label" for="exampleInputEmail1">Cargo</label>
+                        <br>
+                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                            formControlName="idDepartment">
+                            <mat-radio-button class="example-radio-button" *ngFor="let item of charges"
+                                [value]="item.charge">
+                                {{item.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <br>
+                    <div class="form-group">
                         <label class="p-label" for="exampleInputEmail1">Fecha ingreso</label>
                         <br>
                         <input class="form-control" type="date" formControlName="date">

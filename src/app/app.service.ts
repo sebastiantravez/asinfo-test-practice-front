@@ -22,11 +22,11 @@ export class AppService {
   }
 
   public getDepartments(){
-    return this.http.get<any>(ambiente.urlServicioRest + 'getDepartments');
+    return this.http.get<any>(ambiente.urlServicioRest + 'getAllDepartments');
   }
 
   public getCharges(){
-    return this.http.get<any>(ambiente.urlServicioRest + 'getCharges');
+    return this.http.get<any>(ambiente.urlServicioRest + 'getAllCharges');
   }
 
 

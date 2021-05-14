@@ -1,1 +1,122 @@
-<button (click)="closeSession()">SALIR</button>
+<div class="container">
+    <div class="text-center">
+        <h1>{{this.tittle}} {{this.users.user | uppercase}}</h1>
+    </div>
+    <button (click)="closeSession()" class="btn btn-info">SALIR</button>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-lg-4">
+            <div>
+                <div class="text-center">
+                    <h2>Registre nuevo empleado</h2>
+                </div>
+                <form [formGroup]="registerForm">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Nombres Completos</label>
+                        <input formControlName="fullName" type="email" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tipo identificacion</label>
+                        <br>
+                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                            formControlName="identificationType">
+                            <mat-radio-button class="example-radio-button" *ngFor="let item of identificationType"
+                                [value]="item.name">
+                                {{item.name}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Numero de identificacion</label>
+                        <input formControlName="identificationNumber" type="email" class="form-control"
+                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Sueldo</label>
+                        <input formControlName="salary" type="number" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Fecha ingreso</label>
+                        <br>
+                        <input class="form-control" type="date" formControlName="date">
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div>
+                <div class="text-center">
+                    <h2>Lista de empleados a su cargo</h2>
+                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

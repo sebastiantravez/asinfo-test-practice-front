@@ -10,6 +10,18 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AppService } from './app.service';
 import { CanActivateViaAuthGuard } from './pages/guards/CanActivateViaAuthGuard';
+import { DropdownModule } from 'primeng/dropdown';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker'
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+
+
 
 @NgModule({
   declarations: [
@@ -23,9 +35,22 @@ import { CanActivateViaAuthGuard } from './pages/guards/CanActivateViaAuthGuard'
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    DropdownModule,
+    MatSelectModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule
   ],
-  exports:[
-    LoginComponent
+  exports: [
+    LoginComponent,
+    DropdownModule
   ],
   providers: [
     AppService,

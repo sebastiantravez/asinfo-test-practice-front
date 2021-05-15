@@ -38,12 +38,23 @@ export class AppService {
     return this.http.get<any>(ambiente.urlServicioRest + 'getAllCharges');
   }
 
-  saveEmployee(employeePresenter: EmployeePresenter){
+  saveEmployee(employeePresenter: EmployeePresenter) {
     return this.http.post(ambiente.urlServicioRest + "saveEmployee", employeePresenter);
   }
 
+  getAllEmployees(idSupervisor: string) {
+    return this.http.get<any[]>(ambiente.urlServicioRest + 'getAllEmployees?id=' + idSupervisor);
+  }
 
-  validateDni(cedula: String):boolean {
+  updateEmployee(employeePresenter: EmployeePresenter) {
+    return this.http.post(ambiente.urlServicioRest + 'updateEmployee', employeePresenter);
+  }
+
+  deleteEmployee(idEmployee: string) {
+    return this.http.get(ambiente.urlServicioRest + 'deleteEmployee?id=' + idEmployee);
+  }
+
+  validateDni(cedula: String): boolean {
     let cedulaCorrecta = false;
     if (cedula.length == 10) {
       let tercerDigito = parseInt(cedula.substring(2, 3));

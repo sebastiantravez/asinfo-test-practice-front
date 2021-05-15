@@ -20,21 +20,21 @@ export class BusinessPresenter {
   constructor(
     public idBusiness?: any,
     public businessName?: string
-  ){}
+  ) { }
 }
 
 export class ChargesPresenter {
   constructor(
     public idCharge?: any,
     public name?: string
-  ){}
+  ) { }
 }
 
 export class DepartmentPresenter {
   constructor(
     public idDepartment?: any,
     public nameDepartment?: string
-  ){}
+  ) { }
 }
 
 export class EmployeePresenter {
@@ -42,6 +42,7 @@ export class EmployeePresenter {
     public idEmployee?: any,
     public fullName?: string,
     public salary?: number,
+    public email?: string,
     public identificationType?: IdentificationType,
     public identificationNumber?: string,
     public date?: Date,
@@ -53,3 +54,17 @@ export class EmployeePresenter {
   ) { }
 }
 
+export class Credentials {
+  constructor(
+    public name: string,
+    public code: string
+  ) { }
+}
+
+export class CrudValidations {
+  constructor(
+    public buttonCreate: boolean,
+    public buttonUpdate: boolean,
+    public buttonDelete: boolean
+  ) { }
+}

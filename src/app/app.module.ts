@@ -20,6 +20,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { SidebarComponent } from './pages/sidebar/sidebar.component';
 
 
 
@@ -28,7 +29,8 @@ import { MatRadioModule } from '@angular/material/radio';
     AppComponent,
     HomeComponent,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

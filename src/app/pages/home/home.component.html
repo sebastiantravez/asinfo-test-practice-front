@@ -1,6 +1,6 @@
 <div class="container">
     <div class="text-center">
-        <h1>{{this.tittle}} {{this.users.user | uppercase}}</h1>
+        <h1>{{this.tittle}} {{this.users.userName | uppercase}}</h1>
     </div>
     <button (click)="closeSession()" class="btn btn-info">SALIR</button>
     <br>
@@ -11,73 +11,61 @@
                 <div class="text-center">
                     <h2>Registre nuevo empleado</h2>
                 </div>
-                <form [formGroup]="registerForm">
+                <form [formGroup]="registerForm" class="form-inline">
                     <div class="form-group">
                         <label class="p-label" for="exampleInputEmail1">Nombres Completos</label>
                         <input formControlName="fullName" type="text" class="form-control" id="exampleInputEmail1">
                     </div>
-                    <br>
+
                     <div class="form-group">
                         <label class="p-label" for="exampleInputEmail1">Tipo identificación</label>
                         <br>
                         <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
                             formControlName="identificationType">
                             <mat-radio-button class="example-radio-button" *ngFor="let item of identificationType"
-                                [value]="item.name">
+                                [value]="item.code">
                                 {{item.name}}
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
-                    <br>
+
                     <div class="form-group">
                         <label class="p-label" for="exampleInputEmail1">Numero de identificación</label>
                         <input formControlName="identificationNumber" type="text" class="form-control"
                             id="exampleInputEmail1">
+                        <small *ngIf="!resp" class="text-danger">Cedula Invalida</small>
                     </div>
-                    <br>
+
                     <div class="form-group">
                         <label class="p-label" for="exampleInputEmail1">Correo Electronico</label>
                         <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1"
                             aria-describedby="emailHelp">
                         <small style="color: red;" *ngIf="email.invalid && (email.dirty || email.touched)">
-                            <mat-error *ngIf="email.errors.required">Email is required
+                            <mat-error *ngIf="email.errors.required">Email es requerido
                             </mat-error>
                             <mat-error *ngIf="email.errors.pattern">
-                                Invalid email
+                                Email invalido
                             </mat-error>
                         </small>
                     </div>
-                    <br>
+
                     <div class="form-group">
                         <label class="p-label" for="exampleInputEmail1">Sueldo</label>
                         <input formControlName="salary" type="number" class="form-control" id="exampleInputEmail1"
                             aria-describedby="emailHelp">
                     </div>
-                    <br>
+
                     <div class="form-group">
                         <label class="p-label" for="exampleInputEmail1">Departamento</label>
                         <br>
                         <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
-                            formControlName="idDepartment">
+                            formControlName="department">
                             <mat-radio-button class="example-radio-button" *ngFor="let item of departments"
-                                [value]="item.department">
+                                [value]="item.idDepartment">
                                 {{item.nameDepartment}}
                             </mat-radio-button>
                         </mat-radio-group>
                     </div>
-                    <br>
-                    <div class="form-group">
-                        <label class="p-label" for="exampleInputEmail1">Cargo</label>
-                        <br>
-                        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
-                            formControlName="idDepartment">
-                            <mat-radio-button class="example-radio-button" *ngFor="let item of charges"
-                                [value]="item.charge">
-                                {{item.name}}
-                            </mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                    <br>
                     <div class="form-group">
                         <label class="p-label" for="exampleInputEmail1">Fecha ingreso</label>
                         <br>
@@ -89,72 +77,67 @@
             </div>
         </div>
         <div class="col-lg-8">
-            <div>
-                <div class="text-center">
-                    <h2>Lista de empleados a su cargo</h2>
-                </div>
-                <table class="table">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <table class="table">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </table>
         </div>
     </div>
 

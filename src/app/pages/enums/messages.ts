@@ -9,3 +9,15 @@ export enum EnumUsersRoles {
     SUPER_USER = 'SUPER_USER',
     INVITED = 'INVITED'
 }
+
+export enum StateEmployee {
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE'
+}
+
+export enum ChargesType {
+    OPERATOR = 'OPERATOR',
+    SUPERVISOR = 'SUPERVISOR',
+    ADMINISTRATOR = 'ADMINISTRATOR'
+}
+

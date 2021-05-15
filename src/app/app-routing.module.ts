@@ -4,6 +4,7 @@ import { CanActivateViaAuthGuard } from './pages/guards/CanActivateViaAuthGuard'
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { SidebarComponent } from './pages/sidebar/sidebar.component';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'home', component: HomeComponent, pathMatch: 'full', canActivate: [CanActivateViaAuthGuard] },
+
     ])
   ],
   exports: [RouterModule]

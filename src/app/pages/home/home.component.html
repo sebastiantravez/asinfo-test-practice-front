@@ -5,17 +5,16 @@
   </div>
   <div class="d-flex justify-content-between">
     <button (click)="closeSession()" class="btn btn-warning">Salir</button>
-    <button (click)="generatePdf()" class="btn btn-primary">Generar Reporte</button>
   </div>
   <br>
   <br>
   <div *ngIf="this.credentials.code == 'SUPER_USER'" class="row">
-    <div class="col-lg-4">
-      <div>
+    <div class="col-lg-4" style="border: 1px solid gainsboro;padding: 20px;border-radius: 10px;">
+      <div >
         <div class="text-center">
           <h2>Registre nuevo empleado</h2>
         </div>
-        <form [formGroup]="registerForm" class="form-inline">
+        <form  [formGroup]="registerForm" class="form-inline">
           <div class="form-group">
             <label class="p-label" for="exampleInputEmail1">Nombres Completos</label>
             <input formControlName="fullName" type="text" class="form-control" id="exampleInputEmail1">
@@ -72,7 +71,7 @@
           <div class="form-group">
             <label class="p-label" for="exampleInputEmail1">Fecha ingreso</label>
             <br>
-            <input class="form-control" type="date" formControlName="date">
+            <input class="form-control" type="date" [value]="date" formControlName="date">
           </div>
           <br>
           <div class="d-flex justify-content-between">
@@ -85,7 +84,17 @@
         </form>
       </div>
     </div>
-    <div class="col-lg-8">
+    <div class="col-lg-8" style="border: 1px solid gainsboro;padding: 5px;border-radius: 10px;;">
+      <div class="d-flex justify-content-end">
+        <button (click)="generatePdf()" class="btn btn-primary">
+          Generar Reporte
+        </button>
+      </div>
+      <br>
+      <div class="input-group mb-3 input-center">
+        <input (keyup)="searchEmployees($event)" type="text" class="form-control input-search" placeholder="Buscar">
+      </div>
+      <br>
       <table class="table">
         <thead class="thead-dark">
           <tr>
@@ -96,6 +105,7 @@
             <th scope="col">Fecha Ingreso</th>
             <th scope="col">Departamento</th>
             <th scope="col">Acciones</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody *ngFor="let employee of employees">
@@ -113,5 +123,5 @@
       </table>
     </div>
   </div>
-
 </div>
+<br><br>

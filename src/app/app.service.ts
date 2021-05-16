@@ -47,6 +47,7 @@ export class AppService {
   }
 
   updateEmployee(employeePresenter: EmployeePresenter) {
+    debugger
     return this.http.post(ambiente.urlServicioRest + 'updateEmployee', employeePresenter);
   }
 
@@ -54,11 +55,16 @@ export class AppService {
     return this.http.get(ambiente.urlServicioRest + 'deleteEmployee?id=' + idEmployee);
   }
 
-  getReportPdf(){
+  getReportPdf() {
     return this.http.get<any>(ambiente.urlServicioRest + 'generateReport');
   }
 
+  searchEmployees(searchValue: string) {
+    return this.http.get<EmployeePresenter[]>(ambiente.urlServicioRest + "searchEmployees/" + searchValue);
+  }
+
   validateDni(cedula: String): boolean {
+    if (cedula == null || cedula == undefined || cedula == "") { return true }
     let cedulaCorrecta = false;
     if (cedula.length == 10) {
       let tercerDigito = parseInt(cedula.substring(2, 3));
@@ -88,5 +94,29 @@ export class AppService {
     return this.validador = cedulaCorrecta;
   }
 
+  showPdf(data) {
+    const pdfAsDataUri = 'data:application/pdf;base64,' + data.pdf;
+    const array = this.convertDataURIToBinary(pdfAsDataUri);
+    const pdfByte = new Blob([array], { type: 'application/pdf' });
+    const fileURL = URL.createObjectURL(pdfByte);
+    const a: HTMLAnchorElement = document.createElement('a');
+    a.href = fileURL;
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+  }
+
+  convertDataURIToBinary(dataURI) {
+    const BASE64_MARKER = ';base64,';
+    const base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+    const base64 = dataURI.substring(base64Index);
+    const raw = window.atob(base64);
+    const rawLength = raw.length;
+    const array = new Uint8Array(new ArrayBuffer(rawLength));
+    for (let i = 0; i < rawLength; i++) {
+      array[i] = raw.charCodeAt(i);
+    }
+    return array;
+  }
 
 }

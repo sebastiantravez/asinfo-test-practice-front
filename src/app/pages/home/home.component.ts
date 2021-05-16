@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -151,6 +152,7 @@ export class HomeComponent implements OnInit, View {
   }
 
   editEmployee(employee: EmployeePresenter) {
+    const datePipe = new DatePipe("en-US");
     this.registerForm.reset();
     this.resp = true;
     this.crudValidations = new CrudValidations(false, true, false);
@@ -161,7 +163,7 @@ export class HomeComponent implements OnInit, View {
     this.registerForm.get('department').setValue(employee.departmentPresenter.idDepartment);
     this.registerForm.get('email').setValue(employee.email);
     this.registerForm.get('salary').setValue(employee.salary);
-    this.registerForm.get('date').setValue(employee.date);
+    this.registerForm.get('date').setValue(datePipe.transform(employee.date, 'yyyy-MM-dd'));
   }
 
   updateEmployee() {
@@ -231,33 +233,19 @@ export class HomeComponent implements OnInit, View {
 
   generatePdf() {
     this.appService.getReportPdf().subscribe(data => {
-      this.showPdf(data);
+      this.appService.showPdf(data);
     });
   }
 
-  showPdf(data) {
-    const pdfAsDataUri = 'data:application/pdf;base64,' + data.pdf;
-    const array = this.convertDataURIToBinary(pdfAsDataUri);
-    const pdfByte = new Blob([array], { type: 'application/pdf' });
-    const fileURL = URL.createObjectURL(pdfByte);
+  searchEmployees(event: any) {
+    if (event.keyCode == 13) {
+      this.appService.searchEmployees(event.target.value).subscribe(data => {
+        if (data.length > 0) {
+          this.employees = data;
+        }
+      });
+    }
 
-    const a: HTMLAnchorElement = document.createElement('a');
-    a.href = fileURL;
-    a.target = '_blank';
-    document.body.appendChild(a);
-    a.click();
   }
 
-  convertDataURIToBinary(dataURI) {
-    const BASE64_MARKER = ';base64,';
-    const base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-    const base64 = dataURI.substring(base64Index);
-    const raw = window.atob(base64);
-    const rawLength = raw.length;
-    const array = new Uint8Array(new ArrayBuffer(rawLength));
-    for (let i = 0; i < rawLength; i++) {
-        array[i] = raw.charCodeAt(i);
-    }
-    return array;
-}
 }

@@ -54,6 +54,10 @@ export class AppService {
     return this.http.get(ambiente.urlServicioRest + 'deleteEmployee?id=' + idEmployee);
   }
 
+  getReportPdf(){
+    return this.http.get<any>(ambiente.urlServicioRest + 'generateReport');
+  }
+
   validateDni(cedula: String): boolean {
     let cedulaCorrecta = false;
     if (cedula.length == 10) {

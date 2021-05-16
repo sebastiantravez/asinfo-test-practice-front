@@ -1,9 +1,11 @@
 <div class="container">
   <div class="text-center">
+    <br>
     <h1>{{this.credentials.name | uppercase}}</h1>
   </div>
-  <div>
-    <button (click)="closeSession()" class="btn btn-warning">SALIR</button>
+  <div class="d-flex justify-content-between">
+    <button (click)="closeSession()" class="btn btn-warning">Salir</button>
+    <button (click)="generatePdf()" class="btn btn-primary">Generar Reporte</button>
   </div>
   <br>
   <br>

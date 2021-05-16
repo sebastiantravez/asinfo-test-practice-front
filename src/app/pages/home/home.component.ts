@@ -229,4 +229,9 @@ export class HomeComponent implements OnInit, View {
     );
   }
 
+  generatePdf(){
+    this.appService.getReportPdf().subscribe(data => {
+      console.log(data);
+    });
+  }
 }

@@ -229,9 +229,35 @@ export class HomeComponent implements OnInit, View {
     );
   }
 
-  generatePdf(){
+  generatePdf() {
     this.appService.getReportPdf().subscribe(data => {
-      console.log(data);
+      this.showPdf(data);
     });
   }
+
+  showPdf(data) {
+    const pdfAsDataUri = 'data:application/pdf;base64,' + data.pdf;
+    const array = this.convertDataURIToBinary(pdfAsDataUri);
+    const pdfByte = new Blob([array], { type: 'application/pdf' });
+    const fileURL = URL.createObjectURL(pdfByte);
+
+    const a: HTMLAnchorElement = document.createElement('a');
+    a.href = fileURL;
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+  }
+
+  convertDataURIToBinary(dataURI) {
+    const BASE64_MARKER = ';base64,';
+    const base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
+    const base64 = dataURI.substring(base64Index);
+    const raw = window.atob(base64);
+    const rawLength = raw.length;
+    const array = new Uint8Array(new ArrayBuffer(rawLength));
+    for (let i = 0; i < rawLength; i++) {
+        array[i] = raw.charCodeAt(i);
+    }
+    return array;
+}
 }

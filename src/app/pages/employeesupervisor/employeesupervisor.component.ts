@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
-import { BusinessPresenter, ChargesPresenter, Credentials, CrudValidations, DepartmentPresenter, EmployeePresenter, RolesPresenter, UsersPresenter } from 'src/app/models';
+import { CrudValidations, Credentials, UsersPresenter, EmployeePresenter, BusinessPresenter, ChargesPresenter, DepartmentPresenter, RolesPresenter } from 'src/app/models';
 import { NgxSpinner } from 'src/app/services/ngxspinner.service';
 import { Business } from 'src/environments/environment';
 import Swal from 'sweetalert2';
@@ -12,15 +12,18 @@ import { IdentificationType } from '../interface/identificationtype';
 import { AlertMessages, View } from '../interface/view';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-employeesupervisor',
+  templateUrl: './employeesupervisor.component.html',
+  styleUrls: ['./employeesupervisor.component.scss']
 })
-export class HomeComponent implements OnInit, View {
+export class EmployeesupervisorComponent implements OnInit, View {
 
+  rolesPresenter: RolesPresenter[] = [];
+  
   constructor(public router: Router, public formBuilder: FormBuilder,
     public appService: AppService, public spinner: NgxSpinner) { }
   
+
   resp = true;
   employees = [];
   alertMessages = new AlertMessages();
@@ -37,6 +40,7 @@ export class HomeComponent implements OnInit, View {
   emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   departments: any;
   charges: any;
+  
 
   ngOnInit(): void {
     this.crudValidations = new CrudValidations(true, false, false);
@@ -45,11 +49,6 @@ export class HomeComponent implements OnInit, View {
       this.credentials = new Credentials(
         EnumMessages.TITTLEADMIN + " " + this.users.userName,
         EnumUsersRoles.ADMIN
-      );
-    } else if (this.users.usersRolesPresenters.filter(x => x.name = EnumUsersRoles.SUPER_USER).length > 0) {
-      this.credentials = new Credentials(
-        EnumMessages.TITTLESUPERVIOR + " " + this.users.userName,
-        EnumUsersRoles.SUPER_USER
       );
     }
     this.getDepartments();
@@ -62,8 +61,13 @@ export class HomeComponent implements OnInit, View {
       'identificationNumber': ['', Validators.compose([Validators.required])],
       'department': ['', Validators.compose([Validators.required])],
       'email': ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
-      'salary': ['', Validators.compose([Validators.required])],
       'date': ['', Validators.compose([Validators.required])]
+    });
+  }
+
+  getAllRoles(){
+    this.appService.getAllRoles().subscribe(data => {
+      this.rolesPresenter = data;
     });
   }
 
@@ -112,7 +116,7 @@ export class HomeComponent implements OnInit, View {
 
   getEmployeeValuesForm(): EmployeePresenter {
     const businessPresenter = new BusinessPresenter(Business.idBusiness, null);
-    const chargesPresenter = new ChargesPresenter(null, ChargesType.OPERATOR);
+    const chargesPresenter = new ChargesPresenter(null, ChargesType.SUPERVISOR);
     const departmentPresenter = new DepartmentPresenter(this.registerForm.value.department, "");
     const employee = new EmployeePresenter(
       this.registerForm.value.idEmployee,
@@ -128,7 +132,6 @@ export class HomeComponent implements OnInit, View {
       this.users,
       departmentPresenter
     );
-
     return employee;
   }
 
@@ -140,7 +143,7 @@ export class HomeComponent implements OnInit, View {
 
 
   getAllEmployees() {
-    this.appService.getAllEmployees(this.users.idUser).subscribe(data => {
+    this.appService.getAllEmployeesSupervisor().subscribe(data => {
       this.employees = data;
     });
   }
@@ -156,7 +159,6 @@ export class HomeComponent implements OnInit, View {
     this.registerForm.get('identificationNumber').setValue(employee.identificationNumber);
     this.registerForm.get('department').setValue(employee.departmentPresenter.idDepartment);
     this.registerForm.get('email').setValue(employee.email);
-    this.registerForm.get('salary').setValue(employee.salary);
     this.registerForm.get('date').setValue(datePipe.transform(employee.date, 'yyyy-MM-dd'));
   }
 
@@ -220,7 +222,4 @@ export class HomeComponent implements OnInit, View {
       });
     }
   }
-
-
-
 }

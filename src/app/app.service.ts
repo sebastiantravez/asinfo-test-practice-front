@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ambiente } from '../environments/environment'
-import { EmployeePresenter, UsersPresenter } from './models';
+import { EmployeePresenter, RolesPresenter, UsersPresenter } from './models';
+
 
 @Injectable({
   providedIn: 'root'
@@ -63,8 +64,16 @@ export class AppService {
     return this.http.get<EmployeePresenter[]>(ambiente.urlServicioRest + "searchEmployees/" + searchValue);
   }
 
+  getAllEmployeesSupervisor(){
+    return this.http.get<EmployeePresenter[]>(ambiente.urlServicioRest + "getAllEmployeesSupervisor")
+  }
+
+  getAllRoles(){
+    return this.http.get<RolesPresenter[]>(ambiente.urlServicioRest + "getAllRoles");
+  }
+
   validateDni(cedula: String): boolean {
-    if (cedula == null || cedula == undefined || cedula == "") { return true }
+    if (cedula == null || cedula == undefined || cedula == "") { return false }
     let cedulaCorrecta = false;
     if (cedula.length == 10) {
       let tercerDigito = parseInt(cedula.substring(2, 3));

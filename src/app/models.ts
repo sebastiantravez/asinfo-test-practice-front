@@ -16,6 +16,13 @@ export class UsersRolesPresenter {
   ) { }
 }
 
+export class RolesPresenter {
+  constructor(
+    public idRol?: string,
+    public name?: string
+  ) { }
+}
+
 export class BusinessPresenter {
   constructor(
     public idBusiness?: any,

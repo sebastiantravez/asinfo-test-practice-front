@@ -1,0 +1,115 @@
+<div class="container">
+    <div class="text-center">
+      <br>
+      <h1>{{this.credentials.name | uppercase}}</h1>
+    </div>
+    <div class="d-flex justify-content-between">
+      <button (click)="closeSession()" class="btn btn-warning">Salir</button>
+    </div>
+    <br>
+    <br>
+    <div *ngIf="this.credentials.code == 'ADMIN'" class="row" style="margin: auto;">
+      <div class="col-lg-3" style="border: 1px solid gainsboro;padding: 20px;border-radius: 10px;">
+        <div>
+          <div class="text-center">
+            <h2>Registre nuevo supervisor</h2>
+          </div>
+          <form [formGroup]="registerForm" class="form-inline">
+            <div class="form-group">
+              <label class="p-label" for="exampleInputEmail1">Nombres Completos</label>
+              <input formControlName="fullName" type="text" class="form-control" id="exampleInputEmail1">
+            </div>
+  
+            <div class="form-group">
+              <label class="p-label" for="exampleInputEmail1">Tipo identificación</label>
+              <br>
+              <select formControlName="identificationType" class="form-control cursor">
+                <option disabled selected value>Seleccione</option>
+                <option class="cursor" *ngFor="let item of identificationType" [ngValue]="item.code">
+                  {{item.name}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="p-label" for="exampleInputEmail1">Numero de identificación</label>
+              <input formControlName="identificationNumber" type="text" class="form-control" id="exampleInputEmail1">
+              <small *ngIf="!resp" class="text-danger">Cedula Invalida</small>
+            </div>
+            <div class="form-group">
+              <label class="p-label" for="exampleInputEmail1">Correo Electronico</label>
+              <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1"
+                aria-describedby="emailHelp">
+              <small style="color: red;" *ngIf="email.invalid && (email.dirty || email.touched)">
+                <mat-error *ngIf="email.errors.required">Email es requerido
+                </mat-error>
+                <mat-error *ngIf="email.errors.pattern">
+                  Email invalido
+                </mat-error>
+              </small>
+            </div>
+            <div class="form-group">
+              <label class="p-label" for="exampleInputEmail1">Departamento</label>
+              <br>
+              <select formControlName="department" class="form-control cursor">
+                <option disabled selected value>Seleccione</option>
+                <option class="cursor" *ngFor="let item of departments" [ngValue]="item.idDepartment">
+                  {{item.nameDepartment}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="p-label" for="exampleInputEmail1">Fecha ingreso</label>
+              <br>
+              <input class="form-control" type="date" [value]="date" formControlName="date">
+            </div>
+            <br>
+            <div class="d-flex justify-content-between align-self-center">
+              <button *ngIf="crudValidations.buttonCreate" type="submit" (click)="registerEmployee()"
+                class="btn btn-primary">Registrar</button>
+              <button *ngIf="crudValidations.buttonUpdate" type="submit" (click)="updateEmployee()"
+                class="btn btn-info">Actualizar</button>
+              <button (click)="clear()" class="btn btn-success">Limpiar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-9">
+        <br>
+        <div>
+          <input (keyup)="searchEmployees($event)" type="text" class="form-control input-search" placeholder="Buscar">
+        </div>
+        <br>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Nombres</th>
+              <!--<th scope="col">Tipo identificación</th>-->
+              <th scope="col">Numero identificación</th>
+              <th scope="col">Email</th>
+              <th scope="col">Fecha Ingreso</th>
+              <th scope="col">Cargo</th>
+              <th scope="col">Departamento</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let employee of employees">
+            <tr *ngIf="employee.state == 'ACTIVE' && employee.chargesPresenter.name == 'SUPERVISOR'">
+              <td>{{employee.fullName}}</td>
+              <!--<td>{{employee.identificationType}}</td>-->
+              <td>{{employee.identificationNumber}}</td>
+              <td>{{employee.email}}</td>
+              <td>{{employee.date | date:'dd/MMM/yyyy'}}</td>
+              <td>{{employee.chargesPresenter.name}}</td>
+              <td>{{employee.departmentPresenter.nameDepartment}}</td>
+              <td>
+                <button style="bottom: 100px;" (click)="editEmployee(employee)" class="btn btn-info">Editar </button>
+                <br>
+                <button (click)="deleteEmploye(employee)" class="btn btn-danger">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br><br>

@@ -21,6 +21,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { SidebarComponent } from './pages/sidebar/sidebar.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { EmployeesupervisorComponent } from './pages/employeesupervisor/employeesupervisor.component';
 
 
 
@@ -30,7 +32,8 @@ import { SidebarComponent } from './pages/sidebar/sidebar.component';
     HomeComponent,
     LoginComponent,
     NotFoundComponent,
-    SidebarComponent
+    SidebarComponent,
+    EmployeesupervisorComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import { SidebarComponent } from './pages/sidebar/sidebar.component';
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    MatRadioModule
+    MatRadioModule,
+    NgxSpinnerModule
   ],
   exports: [
     LoginComponent,

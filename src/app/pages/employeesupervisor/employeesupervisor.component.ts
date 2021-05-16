@@ -30,7 +30,7 @@ export class EmployeesupervisorComponent implements OnInit, View {
   isDisabled = false;
   crudValidations: CrudValidations;
   credentials: Credentials;
-  users: UsersPresenter;
+  users: UsersPresenter = new UsersPresenter();
   identificationType: IdentificationType[] = [
     { name: 'CEDULA', code: 'DNI' },
     { name: 'RUC', code: 'RUC' },
@@ -43,6 +43,10 @@ export class EmployeesupervisorComponent implements OnInit, View {
   
 
   ngOnInit(): void {
+    this.getDepartments();
+    this.getCharges();
+    this.getAllEmployees();
+    this.getAllRoles();
     this.crudValidations = new CrudValidations(true, false, false);
     this.users = JSON.parse(sessionStorage.getItem('user'));
     if (this.users.usersRolesPresenters.length > 1) {
@@ -51,9 +55,6 @@ export class EmployeesupervisorComponent implements OnInit, View {
         EnumUsersRoles.ADMIN
       );
     }
-    this.getDepartments();
-    this.getCharges();
-    this.getAllEmployees();
     this.registerForm = this.formBuilder.group({
       'idEmployee': ['',],
       'fullName': ['', Validators.compose([Validators.required]), this.isDisabled],
@@ -115,6 +116,15 @@ export class EmployeesupervisorComponent implements OnInit, View {
   }
 
   getEmployeeValuesForm(): EmployeePresenter {
+    const rolSupervisor = this.rolesPresenter.filter(item => item.name == EnumUsersRoles.SUPER_USER);
+    const userData = new UsersPresenter(
+      this.users.idUser,
+      this.users.userName,
+      "",
+      "",
+      this.users.usersRolesPresenters,
+      rolSupervisor
+    );
     const businessPresenter = new BusinessPresenter(Business.idBusiness, null);
     const chargesPresenter = new ChargesPresenter(null, ChargesType.SUPERVISOR);
     const departmentPresenter = new DepartmentPresenter(this.registerForm.value.department, "");
@@ -129,7 +139,7 @@ export class EmployeesupervisorComponent implements OnInit, View {
       StateEmployee.ACTIVE,
       businessPresenter,
       chargesPresenter,
-      this.users,
+      userData,
       departmentPresenter
     );
     return employee;

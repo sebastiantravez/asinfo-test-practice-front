@@ -18,6 +18,8 @@ import { AlertMessages, View } from '../interface/view';
 })
 export class HomeComponent implements OnInit, View {
 
+  rolesPresenter: RolesPresenter[] = [];
+
   constructor(public router: Router, public formBuilder: FormBuilder,
     public appService: AppService, public spinner: NgxSpinner) { }
   
@@ -55,6 +57,7 @@ export class HomeComponent implements OnInit, View {
     this.getDepartments();
     this.getCharges();
     this.getAllEmployees();
+    this.getAllRoles();
     this.registerForm = this.formBuilder.group({
       'idEmployee': ['',],
       'fullName': ['', Validators.compose([Validators.required]), this.isDisabled],
@@ -64,6 +67,12 @@ export class HomeComponent implements OnInit, View {
       'email': ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
       'salary': ['', Validators.compose([Validators.required])],
       'date': ['', Validators.compose([Validators.required])]
+    });
+  }
+
+  getAllRoles(){
+    this.appService.getAllRoles().subscribe(data => {
+      this.rolesPresenter = data;
     });
   }
 
@@ -111,6 +120,15 @@ export class HomeComponent implements OnInit, View {
   }
 
   getEmployeeValuesForm(): EmployeePresenter {
+    const rolSupervisor = this.rolesPresenter.filter(item => item.name == EnumUsersRoles.INVITED);
+    const userData = new UsersPresenter(
+      this.users.idUser,
+      this.users.userName,
+      "",
+      "",
+      this.users.usersRolesPresenters,
+      rolSupervisor
+    );
     const businessPresenter = new BusinessPresenter(Business.idBusiness, null);
     const chargesPresenter = new ChargesPresenter(null, ChargesType.OPERATOR);
     const departmentPresenter = new DepartmentPresenter(this.registerForm.value.department, "");
@@ -125,7 +143,7 @@ export class HomeComponent implements OnInit, View {
       StateEmployee.ACTIVE,
       businessPresenter,
       chargesPresenter,
-      this.users,
+      userData,
       departmentPresenter
     );
 

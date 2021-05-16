@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
-import { UsersPresenter } from 'src/app/models';
+import { RolesPresenter, UsersPresenter } from 'src/app/models';
 import { NgxSpinner } from 'src/app/services/ngxspinner.service';
 import Swal from 'sweetalert2';
 import { EnumUsersRoles } from '../enums/messages';

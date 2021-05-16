@@ -6,7 +6,8 @@ export class UsersPresenter {
     public userName?: string,
     public password?: string,
     public token?: string,
-    public usersRolesPresenters?: UsersRolesPresenter[]
+    public usersRolesPresenters?: UsersRolesPresenter[],
+    public rolesPresenter?:RolesPresenter[]
   ) { }
 }
 

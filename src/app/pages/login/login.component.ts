@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { RolesPresenter, UsersPresenter } from 'src/app/models';
@@ -14,20 +15,24 @@ import { AlertMessages } from '../interface/view';
 })
 export class LoginComponent implements OnInit {
 
-  user: string = "";
-  password: string = "";
   alertMessages = new AlertMessages();
+  loginForm: FormGroup;
 
-  constructor(public appService: AppService, public router: Router, public spinner: NgxSpinner) { }
+  constructor(public appService: AppService, public router: Router, public spinner: NgxSpinner,
+    public formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      'user': ['',],
+      'password': ['',],
+    });
   }
 
   login() {
-    if (this.user == "" || this.password == "") {
+    if (this.loginForm.value.user == "" || this.loginForm.value.password == "") {
       return;
     }
-    this.appService.login(this.user, this.password).subscribe((data: UsersPresenter) => {
+    this.appService.login(this.loginForm.value.user, this.loginForm.value.password).subscribe((data: UsersPresenter) => {
       if (data != null) {
         sessionStorage.setItem('user', JSON.stringify(data));
         this.spinner.showSpinner();
@@ -35,7 +40,7 @@ export class LoginComponent implements OnInit {
           if (data.usersRolesPresenters.filter(x => x.name == EnumUsersRoles.ADMIN).length > 0) {
             this.router.navigate(['home/employee-admin']);
           } else if (data.usersRolesPresenters.filter(x => x.name == EnumUsersRoles.SUPER_USER).length > 0) {
-            this.router.navigate(['home']);
+            this.router.navigate(['/home']);
           }
         } else {
           this.router.navigate(['home/employee-invited']);

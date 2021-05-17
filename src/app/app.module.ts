@@ -23,6 +23,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { SidebarComponent } from './pages/sidebar/sidebar.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { EmployeesupervisorComponent } from './pages/employeesupervisor/employeesupervisor.component';
+import {MatButtonModule} from '@angular/material/button';
 
 
 
@@ -52,7 +53,8 @@ import { EmployeesupervisorComponent } from './pages/employeesupervisor/employee
     MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatButtonModule
   ],
   exports: [
     LoginComponent,

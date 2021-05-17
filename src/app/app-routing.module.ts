@@ -12,9 +12,13 @@ import { SidebarComponent } from './pages/sidebar/sidebar.component';
   imports: [
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
-      { path: 'home', component: HomeComponent, pathMatch: 'full', canActivate: [CanActivateViaAuthGuard] },
-      { path: 'home/employee-admin', component: EmployeesupervisorComponent, pathMatch: 'full', canActivate: [CanActivateViaAuthGuard] },
-      { path: 'home/employee-invited', component: NotFoundComponent, pathMatch: 'full', canActivate: [CanActivateViaAuthGuard] },
+      {
+        path: '',
+        component: SidebarComponent, children: [
+          { path: 'home', component: HomeComponent, pathMatch: 'full', canActivate: [CanActivateViaAuthGuard] },
+          { path: 'home/employee-admin', component: EmployeesupervisorComponent, pathMatch: 'full', canActivate: [CanActivateViaAuthGuard] },
+        ]
+      }
     ])
   ],
   exports: [RouterModule]

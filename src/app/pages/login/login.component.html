@@ -1,53 +1,43 @@
-<br>
 <div class="container">
-    <h1 style="color: black;text-align: center;">INGRESO AL SISTEMA</h1>
-</div>
-
-<nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
-    <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</nav>
-
-<main class="login-form">
-    <div class="cotainer">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">Iniciar</div>
-                        <div class="card-body">
-                            <form action="" method="">
-                                <div class="form-group row">
-                                    <label for="email_address"
-                                        class="col-md-4 col-form-label text-md-right">Usuario</label>
-                                    <div class="col-md-6">
-                                        <input [(ngModel)]="user" type="text" id="email_address" class="form-control"
-                                            name="email-address" required autofocus>
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+        <div class="col-xl-11 col-lg-12 col-md-9">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                            <img src="https://i.pinimg.com/564x/e9/29/1c/e9291cc39e820cd4afc6e58618dfc9e0.jpg" alt="">
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Ingreso al Sistema</h1>
+                                </div>
+                                <form [formGroup]="loginForm">
+                                    <div class="form-group">
+                                        <input formControlName="user" type="email" class="form-control form-control-user"
+                                            id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Usuario">
                                     </div>
-                                </div>
-                                <br>
-                                <div class="form-group row">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
-                                    <div class="col-md-6">
-                                        <input [(ngModel)]="password" type="password" id="password" class="form-control"
-                                            name="password" required>
+                                    <br>
+                                    <div class="form-group">
+                                        <input formControlName="password" type="password"
+                                            class="form-control form-control-user" id="exampleInputPassword"
+                                            placeholder="Password">
                                     </div>
-                                </div>
-                                <br>
-                                <div class="col-md-6 offset-md-4 text-center">
-                                    <button type="submit" (click)="login()" class="btn btn-primary">
-                                        Iniciar
-                                    </button>
-                                </div>
-                            </form>
+                                    <br>
+                                    <div class="text-center">
+                                        <button type="submit" (click)="login()" class="btn btn-primary">
+                                            Iniciar
+                                        </button>
+                                    </div>
+                                </form>
+                                <hr>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</main>
+</div>

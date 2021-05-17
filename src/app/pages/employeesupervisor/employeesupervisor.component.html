@@ -1,28 +1,17 @@
-<div class="container">
-    <div class="text-center">
-      <br>
-      <h1>{{this.credentials.name | uppercase}}</h1>
-    </div>
-    <div class="d-flex justify-content-between">
-      <button (click)="closeSession()" class="btn btn-warning">Salir</button>
-    </div>
-    <br>
-    <br>
+<div class="">
     <div *ngIf="this.credentials.code == 'ADMIN'" class="row" style="margin: auto;">
       <div class="col-lg-3" style="border: 1px solid gainsboro;padding: 20px;border-radius: 10px;">
         <div>
           <div class="text-center">
             <h2>Registre nuevo supervisor</h2>
           </div>
-          <form [formGroup]="registerForm" class="form-inline">
+          <form [formGroup]="registerForm">
             <div class="form-group">
               <label class="p-label" for="exampleInputEmail1">Nombres Completos</label>
               <input formControlName="fullName" type="text" class="form-control" id="exampleInputEmail1">
             </div>
-  
             <div class="form-group">
               <label class="p-label" for="exampleInputEmail1">Tipo identificación</label>
-              <br>
               <select formControlName="identificationType" class="form-control cursor">
                 <option disabled selected value>Seleccione</option>
                 <option class="cursor" *ngFor="let item of identificationType" [ngValue]="item.code">
@@ -74,7 +63,6 @@
         </div>
       </div>
       <div class="col-lg-9">
-        <br>
         <div>
           <input (keyup)="searchEmployees($event)" type="text" class="form-control input-search" placeholder="Buscar">
         </div>
@@ -89,7 +77,7 @@
               <th scope="col">Fecha Ingreso</th>
               <th scope="col">Cargo</th>
               <th scope="col">Departamento</th>
-              <th scope="col">Acciones</th>
+              <th scope="col">Accion</th>
             </tr>
           </thead>
           <tbody *ngFor="let employee of employees">
@@ -102,9 +90,9 @@
               <td>{{employee.chargesPresenter.name}}</td>
               <td>{{employee.departmentPresenter.nameDepartment}}</td>
               <td>
-                <button style="bottom: 100px;" (click)="editEmployee(employee)" class="btn btn-info">Editar </button>
+                <button (click)="editEmployee(employee)" class="btn btn-info"><i class="fa fa-pencil"></i></button>
                 <br>
-                <button (click)="deleteEmploye(employee)" class="btn btn-danger">Eliminar</button>
+                <button (click)="deleteEmploye(employee)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
           </tbody>

@@ -90,12 +90,6 @@ export class HomeComponent implements OnInit, View {
 
   get email() { return this.registerForm.get('email') }
 
-  closeSession() {
-    this.spinner.showSpinner();
-    sessionStorage.clear();
-    this.router.navigate(['/']);
-  }
-
   registerEmployee() {
     if (this.registerForm.valid) {
       if (this.registerForm.value.identificationType == 'DNI') {
@@ -214,14 +208,6 @@ export class HomeComponent implements OnInit, View {
         });
       }
     })
-  }
-
-  generatePdf() {
-    this.spinner.showSpinnerPdf();
-    this.appService.getReportPdf().subscribe(data => {
-      this.spinner.hideSpinnerPdf();
-      this.appService.showPdf(data);
-    });
   }
 
   searchEmployees(event: any) {

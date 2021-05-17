@@ -250,13 +250,14 @@ export class HomeComponent implements OnInit, View {
     }
     if (this.idUser == "" || this.idUser == null || this.idUser == undefined) { return }
     document.getElementById("exampleModalCenter").click();
+    const rolSupervisor = this.rolesPresenter.filter(item => item.name == EnumUsersRoles.INVITED);
     const newUser = new UsersPresenter(
       this.idUser,
       this.dialogUser.value.user,
       this.dialogUser.value.password,
       null,
       null,
-      null
+      rolSupervisor
     );
     this.appService.updateUser(newUser).subscribe(data => {
       this.alertMessages.sucessUpdateForm();

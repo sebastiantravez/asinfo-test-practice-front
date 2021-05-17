@@ -48,7 +48,6 @@ export class AppService {
   }
 
   updateEmployee(employeePresenter: EmployeePresenter) {
-    debugger
     return this.http.post(ambiente.urlServicioRest + 'updateEmployee', employeePresenter);
   }
 

@@ -20,11 +20,11 @@ export class EmployeesupervisorComponent implements OnInit, View {
   @ViewChild('closeModal') closeModal: ElementRef
   rolesPresenter: RolesPresenter[] = [];
   idUser: string = "";
-    
+
   constructor(public router: Router, public formBuilder: FormBuilder,
     public appService: AppService, public spinner: NgxSpinner) { }
-  
-  
+
+
 
   resp = true;
   employees = [];
@@ -43,7 +43,7 @@ export class EmployeesupervisorComponent implements OnInit, View {
   departments: any;
   charges: any;
   dialogUser: FormGroup;
-  
+
   ngOnInit(): void {
     this.getDepartments();
     this.getCharges();
@@ -72,7 +72,7 @@ export class EmployeesupervisorComponent implements OnInit, View {
     });
   }
 
-  getAllRoles(){
+  getAllRoles() {
     this.appService.getAllRoles().subscribe(data => {
       this.rolesPresenter = data;
     });
@@ -254,13 +254,14 @@ export class EmployeesupervisorComponent implements OnInit, View {
     }
     if (this.idUser == "" || this.idUser == null || this.idUser == undefined) { return }
     document.getElementById("exampleModalCenter").click();
+    const rolSupervisor = this.rolesPresenter.filter(item => item.name == EnumUsersRoles.SUPER_USER);
     const newUser = new UsersPresenter(
       this.idUser,
       this.dialogUser.value.user,
       this.dialogUser.value.password,
       null,
       null,
-      null
+      rolSupervisor
     );
     this.appService.updateUser(newUser).subscribe(data => {
       this.alertMessages.sucessUpdateForm();

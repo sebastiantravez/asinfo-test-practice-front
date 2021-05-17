@@ -17,7 +17,7 @@
         <li class="nav-item">
 
             <hr class="sidebar-divider">
-            <a *ng="credentials.code != 'INVITED'" (click)="generatePdf()" class="nav-link collapsed cursor"
+            <a *ngIf="credentials.code == 'SUPER_USER'" (click)="generatePdf()" class="nav-link collapsed cursor"
                 data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Generar Reporte</span>

@@ -17,6 +17,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.users = JSON.parse(sessionStorage.getItem('user'));
+    debugger
     if (this.users.usersRolesPresenters.length > 1) {
       this.credentials = new Credentials(
         EnumMessages.TITTLEADMIN + " " + this.users.userName,

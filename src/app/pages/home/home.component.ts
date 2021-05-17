@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit, View {
   rolesPresenter: RolesPresenter[] = [];
   idUser: string = "";
 
-
   constructor(public router: Router, public formBuilder: FormBuilder,
     public appService: AppService, public spinner: NgxSpinner, public dialog: MatDialog,
     private modalService: NgbModal) { }

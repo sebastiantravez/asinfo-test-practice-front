@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['home/employee-admin']);
           } else if (data.usersRolesPresenters.filter(x => x.name == EnumUsersRoles.SUPER_USER).length > 0) {
             this.router.navigate(['/home']);
+          } else {
+            this.router.navigate(['home/employee-invited']);
           }
         } else {
           this.router.navigate(['home/employee-invited']);

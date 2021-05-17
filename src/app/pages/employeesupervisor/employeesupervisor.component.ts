@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
@@ -17,9 +17,10 @@ import { AlertMessages, View } from '../interface/view';
   styleUrls: ['./employeesupervisor.component.scss']
 })
 export class EmployeesupervisorComponent implements OnInit, View {
-
+  @ViewChild('closeModal') closeModal: ElementRef
   rolesPresenter: RolesPresenter[] = [];
-  
+  idUser: string = "";
+    
   constructor(public router: Router, public formBuilder: FormBuilder,
     public appService: AppService, public spinner: NgxSpinner) { }
   
@@ -43,7 +44,6 @@ export class EmployeesupervisorComponent implements OnInit, View {
   charges: any;
   dialogUser: FormGroup;
   
-
   ngOnInit(): void {
     this.getDepartments();
     this.getCharges();
@@ -65,6 +65,10 @@ export class EmployeesupervisorComponent implements OnInit, View {
       'department': ['', Validators.compose([Validators.required])],
       'email': ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
       'date': ['', Validators.compose([Validators.required])]
+    });
+    this.dialogUser = this.formBuilder.group({
+      'user': ['', Validators.compose([Validators.required])],
+      'password': ['', Validators.compose([Validators.required])]
     });
   }
 
@@ -234,4 +238,37 @@ export class EmployeesupervisorComponent implements OnInit, View {
       });
     }
   }
+
+  openModal(idUser: string) {
+    this.idUser = idUser;
+  }
+
+  closeDialog() {
+    document.getElementById("exampleModalCenter").click();
+    this.dialogUser.reset();
+  }
+
+  updateUser() {
+    if (this.dialogUser.invalid) {
+      return;
+    }
+    if (this.idUser == "" || this.idUser == null || this.idUser == undefined) { return }
+    document.getElementById("exampleModalCenter").click();
+    const newUser = new UsersPresenter(
+      this.idUser,
+      this.dialogUser.value.user,
+      this.dialogUser.value.password,
+      null,
+      null,
+      null
+    );
+    this.appService.updateUser(newUser).subscribe(data => {
+      this.alertMessages.sucessUpdateForm();
+      this.dialogUser.reset();
+      this.idUser = "";
+    }, (err: any) => {
+      this.alertMessages.errorDuplicateUser();
+    });
+  }
+
 }

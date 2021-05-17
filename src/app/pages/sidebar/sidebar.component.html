@@ -15,10 +15,10 @@
         <hr class="sidebar-divider">
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-           
+
             <hr class="sidebar-divider">
-            <a (click)="generatePdf()" class="nav-link collapsed cursor" data-toggle="collapse"
-                data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <a *ng="credentials.code != 'INVITED'" (click)="generatePdf()" class="nav-link collapsed cursor"
+                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Generar Reporte</span>
             </a>
@@ -36,13 +36,13 @@
                         <br>
                         <h1></h1>
                     </div>
-                    
+
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <span style="color: black;font-weight: bold;"
-                            class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
@@ -67,7 +67,7 @@
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
-                        <div class="topbar-divider d-none d-sm-block"></div>
+                            <div class="topbar-divider d-none d-sm-block"></div>
                             <span style="color: black;font-weight: bold;"
                                 class="mr-2 d-none d-lg-inline text-gray-600 small">{{this.credentials.name |
                                 uppercase}}</span>

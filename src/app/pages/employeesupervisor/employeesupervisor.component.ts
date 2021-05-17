@@ -252,6 +252,7 @@ export class EmployeesupervisorComponent implements OnInit, View, UserValidation
 
   closeDialog() {
     document.getElementById("exampleModalCenter").click();
+    this.valuePassword = "";
     this.dialogUser.reset();
   }
 

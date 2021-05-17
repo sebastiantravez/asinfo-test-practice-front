@@ -247,6 +247,7 @@ export class HomeComponent implements OnInit, View, UserValidationView {
 
   closeDialog() {
     document.getElementById("exampleModalCenter").click();
+    this.valuePassword = "";
     this.dialogUser.reset();
   }
 

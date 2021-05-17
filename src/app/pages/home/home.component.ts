@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { BusinessPresenter, ChargesPresenter, Credentials, CrudValidations, DepartmentPresenter, EmployeePresenter, RolesPresenter, UsersPresenter } from 'src/app/models';
@@ -10,6 +11,7 @@ import Swal from 'sweetalert2';
 import { ChargesType, EnumMessages, EnumUsersRoles, StateEmployee } from '../enums/messages';
 import { IdentificationType } from '../interface/identificationtype';
 import { AlertMessages, View } from '../interface/view';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -17,12 +19,16 @@ import { AlertMessages, View } from '../interface/view';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, View {
-
+  @ViewChild('closeModal') closeModal: ElementRef
   rolesPresenter: RolesPresenter[] = [];
+  idUser: string = "";
+
 
   constructor(public router: Router, public formBuilder: FormBuilder,
-    public appService: AppService, public spinner: NgxSpinner) { }
-  
+    public appService: AppService, public spinner: NgxSpinner, public dialog: MatDialog,
+    private modalService: NgbModal) { }
+
+
   resp = true;
   employees = [];
   alertMessages = new AlertMessages();
@@ -39,6 +45,7 @@ export class HomeComponent implements OnInit, View {
   emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   departments: any;
   charges: any;
+  dialogUser: FormGroup;
 
   ngOnInit(): void {
     this.crudValidations = new CrudValidations(true, false, false);
@@ -68,9 +75,13 @@ export class HomeComponent implements OnInit, View {
       'salary': ['', Validators.compose([Validators.required])],
       'date': ['', Validators.compose([Validators.required])]
     });
+    this.dialogUser = this.formBuilder.group({
+      'user': ['', Validators.compose([Validators.required])],
+      'password': ['', Validators.compose([Validators.required])]
+    });
   }
 
-  getAllRoles(){
+  getAllRoles() {
     this.appService.getAllRoles().subscribe(data => {
       this.rolesPresenter = data;
     });
@@ -225,6 +236,37 @@ export class HomeComponent implements OnInit, View {
     }
   }
 
+  openModal(idUser: string) {
+    this.idUser = idUser;
+  }
+
+  closeDialog() {
+    document.getElementById("exampleModalCenter").click();
+    this.dialogUser.reset();
+  }
+
+  updateUser() {
+    if (this.dialogUser.invalid) {
+      return;
+    }
+    if (this.idUser == "" || this.idUser == null || this.idUser == undefined) { return }
+    document.getElementById("exampleModalCenter").click();
+    const newUser = new UsersPresenter(
+      this.idUser,
+      this.dialogUser.value.user,
+      this.dialogUser.value.password,
+      null,
+      null,
+      null
+    );
+    this.appService.updateUser(newUser).subscribe(data => {
+      this.alertMessages.sucessUpdateForm();
+      this.dialogUser.reset();
+      this.idUser = "";
+    }, (err: any) => {
+      this.alertMessages.errorDuplicateUser();
+    });
+  }
 
 
 }

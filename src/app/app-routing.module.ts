@@ -17,6 +17,7 @@ import { SidebarComponent } from './pages/sidebar/sidebar.component';
         component: SidebarComponent, children: [
           { path: 'home', component: HomeComponent, pathMatch: 'full', canActivate: [CanActivateViaAuthGuard] },
           { path: 'home/employee-admin', component: EmployeesupervisorComponent, pathMatch: 'full', canActivate: [CanActivateViaAuthGuard] },
+          { path: 'home/employee-invited', component: NotFoundComponent, pathMatch: 'full', canActivate: [CanActivateViaAuthGuard] },
         ]
       }
     ])

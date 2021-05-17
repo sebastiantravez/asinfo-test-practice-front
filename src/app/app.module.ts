@@ -23,19 +23,14 @@ import { MatRadioModule } from '@angular/material/radio';
 import { SidebarComponent } from './pages/sidebar/sidebar.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { EmployeesupervisorComponent } from './pages/employeesupervisor/employeesupervisor.component';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { UsermodalComponent } from './pages/modals/usermodal/usermodal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    LoginComponent,
-    NotFoundComponent,
-    SidebarComponent,
-    EmployeesupervisorComponent
-  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -54,11 +49,26 @@ import {MatButtonModule} from '@angular/material/button';
     MatInputModule,
     MatRadioModule,
     NgxSpinnerModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   exports: [
     LoginComponent,
-    DropdownModule
+    DropdownModule,
+    UsermodalComponent,
+    MatDialogModule
+  ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    NotFoundComponent,
+    SidebarComponent,
+    EmployeesupervisorComponent,
+    UsermodalComponent
+  ],
+  entryComponents: [
+    UsermodalComponent
   ],
   providers: [
     AppService,

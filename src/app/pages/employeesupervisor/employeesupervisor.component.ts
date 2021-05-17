@@ -23,6 +23,7 @@ export class EmployeesupervisorComponent implements OnInit, View {
   constructor(public router: Router, public formBuilder: FormBuilder,
     public appService: AppService, public spinner: NgxSpinner) { }
   
+  
 
   resp = true;
   employees = [];
@@ -40,6 +41,7 @@ export class EmployeesupervisorComponent implements OnInit, View {
   emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   departments: any;
   charges: any;
+  dialogUser: FormGroup;
   
 
   ngOnInit(): void {

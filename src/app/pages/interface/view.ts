@@ -17,6 +17,7 @@ export interface View {
   employees: any[];
   alertMessages: AlertMessages;
   isDisabled: boolean;
+  dialogUser: FormGroup;
 }
 
 export class AlertMessages {
@@ -58,6 +59,14 @@ export class AlertMessages {
       icon: 'error',
       title: 'Oops...',
       text: 'Numero de identificacion o email ya existen',
+    });
+  }
+
+  errorDuplicateUser() {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'El usuario ingresado ya existe',
     });
   }
 

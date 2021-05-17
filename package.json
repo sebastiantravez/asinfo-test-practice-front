@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~11.2.1",
     "@angular/platform-browser-dynamic": "~11.2.1",
     "@angular/router": "~11.2.1",
+    "@ng-bootstrap/ng-bootstrap": "^9.1.1",
     "ngx-spinner": "^11.0.1",
     "primeicons": "^4.1.0",
     "primeng": "^11.4.2",

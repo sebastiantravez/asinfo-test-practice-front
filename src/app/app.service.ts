@@ -64,12 +64,16 @@ export class AppService {
     return this.http.get<EmployeePresenter[]>(ambiente.urlServicioRest + "searchEmployees/" + searchValue);
   }
 
-  getAllEmployeesSupervisor(){
+  getAllEmployeesSupervisor() {
     return this.http.get<EmployeePresenter[]>(ambiente.urlServicioRest + "getAllEmployeesSupervisor")
   }
 
-  getAllRoles(){
+  getAllRoles() {
     return this.http.get<RolesPresenter[]>(ambiente.urlServicioRest + "getAllRoles");
+  }
+
+  updateUser(newUser: UsersPresenter) {
+    return this.http.post(ambiente.urlServicioRest + "updateUser", newUser)
   }
 
   validateDni(cedula: String): boolean {

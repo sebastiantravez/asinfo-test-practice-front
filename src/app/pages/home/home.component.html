@@ -97,8 +97,9 @@
             <td>{{employee.departmentPresenter.nameDepartment}}</td>
             <td>
               <button (click)="editEmployee(employee)" class="btn btn-info"><i class="fa fa-pencil"></i></button>
-              <br>
               <button (click)="deleteEmploye(employee)" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+              <button (click)="openModal(employee.usersPresenter.idUser)" data-toggle="modal"
+                data-target="#exampleModalCenter" class="btn btn-warning"><i class="fa fa-user"></i></button>
             </td>
           </tr>
         </tbody>
@@ -107,3 +108,34 @@
   </div>
 </div>
 <br><br>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Actualizar Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="dialogUser">
+        <div class="modal-body">
+          <p>Nuevo usuario</p>
+          <input formControlName="user" type="text" class="form-control" name="" id="">
+          <p>Nueva clave</p>
+          <input formControlName="password" type="text" class="form-control" name="" id="">
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button #closeModal (click)="closeDialog()" type="button" class="btn btn-secondary"
+          data-dismiss="modal">Cerrar</button>
+        <button #closeModal (click)="updateUser()" type="button" class="btn btn-primary">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div>

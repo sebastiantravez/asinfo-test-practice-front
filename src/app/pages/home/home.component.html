@@ -123,15 +123,61 @@
       <form [formGroup]="dialogUser">
         <div class="modal-body">
           <p>Nuevo usuario</p>
-          <input formControlName="user" type="text" class="form-control" name="" id="">
+          <input formControlName="user" type="text" class="form-control">
+          <small style="color: red;" *ngIf="user.invalid && (user.dirty || user.touched)">
+            <mat-error *ngIf="user.errors.required">Usuario es requerido
+            </mat-error>
+            <mat-error *ngIf="user.errors.minlength">Minimo 8 caracteres
+            </mat-error>
+          </small>
           <p>Nueva clave</p>
-          <input formControlName="password" type="text" class="form-control" name="" id="">
+          <input [(ngModel)]="valuePassword" (keyup)="validateUser($event)" formControlName="password" type="text"
+            class="form-control">
+          <small *ngIf="valuePassword.length > 0">
+            <span class="icon-position" *ngIf="errorPassLong">
+              <i class="fa fa-times-circle"></i>
+            </span>
+            <span class="icon-position" *ngIf="!errorPassLong">
+              <i class="fa fa-check-circle"></i>
+            </span>
+            <mat-error [ngClass]="{'error-invalid': errorPassLong, 'error-valid': !errorPassLong}">
+              {{containLong}}
+            </mat-error>
+            <br>
+            <span class="icon-position" *ngIf="errorPassMayus">
+              <i class="fa fa-times-circle"></i>
+            </span>
+            <span class="icon-position" *ngIf="!errorPassMayus">
+              <i class="fa fa-check-circle"></i>
+            </span>
+            <mat-error [ngClass]="{'error-invalid': errorPassMayus, 'error-valid': !errorPassMayus}">
+              {{containMayus}}</mat-error>
+            <br>
+            <span class="icon-position" *ngIf="errorPassNumber">
+              <i class="fa fa-times-circle"></i>
+            </span>
+            <span class="icon-position" *ngIf="!errorPassNumber">
+              <i class="fa fa-check-circle"></i>
+            </span>
+            <mat-error [ngClass]="{'error-invalid': errorPassNumber, 'error-valid': !errorPassNumber}">
+              {{containNumber}}</mat-error>
+            <br>
+            <span class="icon-position" *ngIf="errorPassSpace">
+              <i class="fa fa-times-circle"></i>
+            </span>
+            <span class="icon-position" *ngIf="!errorPassSpace">
+              <i class="fa fa-check-circle"></i>
+            </span>
+            <mat-error [ngClass]="{'error-invalid': errorPassSpace, 'error-valid': !errorPassSpace}">
+              {{errorPassSpace}}</mat-error>
+          </small>
         </div>
+        <br>
       </form>
       <div class="modal-footer">
         <button #closeModal (click)="closeDialog()" type="button" class="btn btn-secondary"
           data-dismiss="modal">Cerrar</button>
-        <button #closeModal (click)="updateUser()" type="button" class="btn btn-primary">Actualizar</button>
+        <button #closeModal (click)="updateUser()" type="submit" class="btn btn-primary">Actualizar</button>
       </div>
     </div>
   </div>

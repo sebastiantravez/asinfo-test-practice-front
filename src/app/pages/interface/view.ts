@@ -10,7 +10,6 @@ export interface View {
   credentials: Credentials;
   users: UsersPresenter;
   registerForm: FormGroup;
-  emailPattern: any;
   departments: any;
   charges: any;
   resp: boolean;

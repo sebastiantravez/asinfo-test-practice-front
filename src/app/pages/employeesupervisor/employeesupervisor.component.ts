@@ -5,10 +5,11 @@ import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { CrudValidations, Credentials, UsersPresenter, EmployeePresenter, BusinessPresenter, ChargesPresenter, DepartmentPresenter, RolesPresenter } from 'src/app/models';
 import { NgxSpinner } from 'src/app/services/ngxspinner.service';
-import { Business } from 'src/environments/environment';
+import { ambiente, Business } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { ChargesType, EnumMessages, EnumUsersRoles, StateEmployee } from '../enums/messages';
 import { IdentificationType } from '../interface/identificationtype';
+import { UserValidationView } from '../interface/uservalidation';
 import { AlertMessages, View } from '../interface/view';
 
 @Component({
@@ -16,16 +17,22 @@ import { AlertMessages, View } from '../interface/view';
   templateUrl: './employeesupervisor.component.html',
   styleUrls: ['./employeesupervisor.component.scss']
 })
-export class EmployeesupervisorComponent implements OnInit, View {
+export class EmployeesupervisorComponent implements OnInit, View, UserValidationView {
   @ViewChild('closeModal') closeModal: ElementRef
   rolesPresenter: RolesPresenter[] = [];
   idUser: string = "";
 
   constructor(public router: Router, public formBuilder: FormBuilder,
     public appService: AppService, public spinner: NgxSpinner) { }
-
-
-
+  valuePassword = '';
+  containMayus = 'Debe incluir al menos 1 letra mayúscula';;
+  containNumber = 'Debe incluir al menos 1 número';;
+  containLong = 'Debe tener entre 6 y 8 caracteres';;
+  containSpace = 'No puede contener espacios';
+  errorPassMayus = true;
+  errorPassNumber = true;
+  errorPassLong = true;
+  errorPassSpace = false;
   resp = true;
   employees = [];
   alertMessages = new AlertMessages();
@@ -39,7 +46,6 @@ export class EmployeesupervisorComponent implements OnInit, View {
     { name: 'PASAPORTE', code: 'PASSPORT' }
   ];
   registerForm: FormGroup;
-  emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   departments: any;
   charges: any;
   dialogUser: FormGroup;
@@ -63,11 +69,11 @@ export class EmployeesupervisorComponent implements OnInit, View {
       'identificationType': ['', Validators.compose([Validators.required])],
       'identificationNumber': ['', Validators.compose([Validators.required])],
       'department': ['', Validators.compose([Validators.required])],
-      'email': ['', Validators.compose([Validators.required, Validators.pattern(this.emailPattern)])],
+      'email': ['', Validators.compose([Validators.required, Validators.pattern(ambiente.emailPattern)])],
       'date': ['', Validators.compose([Validators.required])]
     });
     this.dialogUser = this.formBuilder.group({
-      'user': ['', Validators.compose([Validators.required])],
+      'user': ['', Validators.compose([Validators.required, Validators.minLength(8)])],
       'password': ['', Validators.compose([Validators.required])]
     });
   }
@@ -91,6 +97,7 @@ export class EmployeesupervisorComponent implements OnInit, View {
   }
 
   get email() { return this.registerForm.get('email') }
+  get user() { return this.dialogUser.get('user') }
 
   closeSession() {
     this.spinner.showSpinner();
@@ -267,9 +274,36 @@ export class EmployeesupervisorComponent implements OnInit, View {
       this.alertMessages.sucessUpdateForm();
       this.dialogUser.reset();
       this.idUser = "";
+      this.valuePassword = "";
     }, (err: any) => {
       this.alertMessages.errorDuplicateUser();
     });
+  }
+
+  validateUser(event: any) {
+    var passUpperCase = new RegExp(/[A-Z]/g);
+    if (passUpperCase.test(event.target.value)) {
+      this.errorPassMayus = false;
+    } else {
+      this.errorPassMayus = true;
+    }
+    var passNumber = new RegExp(/[0-9]/g);
+    if (passNumber.test(event.target.value)) {
+      this.errorPassNumber = false;
+    } else {
+      this.errorPassNumber = true;
+    }
+    var containSpace = new RegExp(/\s/);
+    if (containSpace.test(event.target.value)) {
+      this.errorPassSpace = true;
+    } else {
+      this.errorPassSpace = false;
+    }
+    if (event.target.value.length >= 6) {
+      this.errorPassLong = false;
+    } else {
+      this.errorPassLong = true;
+    }
   }
 
 }

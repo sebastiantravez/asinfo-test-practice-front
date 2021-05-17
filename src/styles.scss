@@ -5,3 +5,28 @@
 .cursor{
     cursor: pointer !important;
 }
+
+
+.error-invalid {
+    color: red !important;
+}
+
+.error-valid {
+    color: #4e9602 !important;
+}
+
+.icon-position {
+    position: relative;
+    left: -5px;
+    top: 3px;
+}
+
+.fa-check-circle {
+    color: #4e9602 !important;
+    font-size: 20px !important;
+}
+
+.fa-times-circle {
+    color: red !important;
+    font-size: 20px !important;
+}
